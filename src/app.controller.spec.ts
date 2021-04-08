@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,8 +16,8 @@ describe('AppController', () => {
   });
 
   describe('getKey', () => {
-    it('should return empty string to unknown key', async () => {
-      expect(await appController.getKey('asdf')).toBe(undefined);
+    it('should return exception to unknown key', async () => {
+      await expect(appController.getKey('asdf')).rejects.toThrow(NotFoundException);
     });
     
     it('should return key value', async () => {
@@ -46,7 +47,7 @@ describe('AppController', () => {
       await appController.createKey({name:'c',value: '13'});
       await appController.createKey({name:'d',value: '14'});
 
-      expect(await appController.getKey('a')).toBe(undefined);
+      await expect(appController.getKey('a')).rejects.toThrow(NotFoundException);
       expect(await appController.getKey('b')).toBe('12');
       expect(await appController.getKey('c')).toBe('13');
       expect(await appController.getKey('d')).toBe('14');

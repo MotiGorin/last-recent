@@ -15,7 +15,7 @@ export class AppService {
   }
 
   async getKey(key: string): Promise<KeyValue> {
-    let result = this.keysHash.get(key) ?? new KeyValue();
+    const result = await this.keysHash.get(key) ?? new KeyValue();
     if(result.value !== undefined)
     {
         await this.lastRecentList.deleteNode(result.lastRecent);
@@ -31,13 +31,13 @@ export class AppService {
     if(key.value !== undefined){
       key.value = value
     }
-    else if (this.keysHash.size < MAX_CONCURRENT_KEYS)
+    else if (await this.keysHash.size < MAX_CONCURRENT_KEYS)
     {
       key = await this.createKey(name, value);
     }
     else {      
       let lastNode = await this.lastRecentList.getLastNode();
-      this.keysHash.delete(lastNode.data);
+      await this.keysHash.delete(lastNode.data);
       await this.lastRecentList.deleteNode(lastNode);
       key = await this.createKey(name, value);
     }
@@ -49,7 +49,7 @@ export class AppService {
     let key = new KeyValue();
     key.value = value;
     key.lastRecent = await this.lastRecentList.insertInBegin(name);
-    this.keysHash.set(name,key);
+    await this.keysHash.set(name,key);
     return key;
   }
 }

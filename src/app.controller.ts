@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, NotFoundException, Param, Post} from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { CreateKeyDto } from './create_key.dto';
@@ -18,12 +18,21 @@ export class AppController {
 
   @Get(':key')
   async getKey(@Param('key') key: string): Promise<string> {
+   const keyValue = await this.appService.getKey(key);
+   const moti ='sdf';
+   
+    if(keyValue.lastRecent === undefined)
+      throw new NotFoundException('Key Not Found');
+    
     return (await this.appService.getKey(key)).value;
   }
 
   @Post()
   @ApiResponse({type: String, status: 200})
   async createKey(@Body() createKeyDto: CreateKeyDto): Promise<string> {
+    if(createKeyDto.name === undefined || createKeyDto.value === undefined)
+    throw new BadRequestException();
+  
     return (await this.appService.setKey(createKeyDto.name, createKeyDto.value)).value;
   }
 }
