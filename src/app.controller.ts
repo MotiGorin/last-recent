@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiExcludeEndpoint, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { CreateKeyDto } from './create_key.dto';
 
@@ -7,6 +7,14 @@ import { CreateKeyDto } from './create_key.dto';
 @ApiTags('last-recent')
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+
+  
+  @Get()
+  @ApiExcludeEndpoint()
+  async hello(): Promise<string> {
+    return await this.appService.getHello();
+  }
 
   @Get(':key')
   async getKey(@Param('key') key: string): Promise<string> {

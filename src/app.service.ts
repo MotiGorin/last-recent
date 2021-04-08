@@ -11,7 +11,7 @@ export class AppService {
   private lastRecentList: LinkedList<string> = new LinkedList<string>();
 
   async getHello(): Promise<string> {
-    return "Hello";
+    return "Last Recent";
   }
 
   async getKey(key: string): Promise<KeyValue> {
