@@ -34,7 +34,6 @@
     "dependencies": "^0.0.1",
     "in": "^0.18.2",
     "install": "^0.13.0",
-    "linked-list-typescript": "^1.0.15",
     "node-watch": "^0.7.1",
     "project": "^0.1.6",
     "reflect-metadata": "^0.1.13",

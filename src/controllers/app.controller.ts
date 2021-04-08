@@ -1,7 +1,8 @@
 import { BadRequestException, Body, Controller, Get, NotFoundException, Param, Post} from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AppService } from './app.service';
-import { CreateKeyDto } from './create_key.dto';
+import { CreateKeyDto } from 'src/dtos/create_key.dto';
+import { AppService } from 'src/services/app.service';
+
 
 @Controller()
 @ApiTags('last-recent')

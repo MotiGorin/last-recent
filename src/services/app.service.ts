@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { KeyValue } from './key_value.entity';
-import { LinkedList } from './linked_list.entity';
+import { LinkedList } from 'src/entities/linked_list.entity';
+import { KeyValue } from '../entities/key_value.entity';
+
 
 const MAX_CONCURRENT_KEYS = 3;
 
